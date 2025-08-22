@@ -1,9 +1,11 @@
+// app/api/auth/[...nextauth]/route.js
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-const handler = NextAuth({
+// Export authOptions so it can be used in getServerSession
+export const authOptions = {
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -35,7 +37,11 @@ const handler = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
+// Create the handler
+const handler = NextAuth(authOptions);
+
+// Export for GET/POST requests
 export { handler as GET, handler as POST };
 export default handler;

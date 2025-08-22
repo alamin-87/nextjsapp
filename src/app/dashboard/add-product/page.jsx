@@ -1,9 +1,10 @@
-// app/dashboard/add-product/page.jsx
-import { auth } from "@/lib/auth";
 import AddProductForm from "./sections/AddProductForm";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
 
 export default async function AddProductPage() {
-  const session = await auth();
+  const session = await getServerSession({ cookies }, authOptions);
 
   if (!session) {
     return (
