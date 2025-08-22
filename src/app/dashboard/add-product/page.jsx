@@ -1,10 +1,10 @@
 import AddProductForm from "./sections/AddProductForm";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { cookies } from "next/headers";
+import { auth } from "@/lib/auth";
+
+export const dynamic = "force-dynamic"; // prevents prerender
 
 export default async function AddProductPage() {
-  const session = await getServerSession({ cookies }, authOptions);
+  const session = await auth();
 
   if (!session) {
     return (

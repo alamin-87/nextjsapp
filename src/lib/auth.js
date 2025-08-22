@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { cookies } from "next/headers";
 
-export const auth = async (req, res) => {
-  const session = await getServerSession(req, res);
-  return session;
-};
+export async function auth() {
+  return await getServerSession({ cookies }, authOptions);
+}
